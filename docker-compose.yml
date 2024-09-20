@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - '${DB_PORT}:5432'
+    volumes:
+      - postgres_data:/usr/share/postgres/data
+    networks:
+      - sn_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASS}
+    ports:
+      - '${REDIS_PORT}:6379'
+    volumes:
+      - redis_data:/usr/share/redis/data
+    networks:
+      - sn_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  sn_network:
+    driver: bridge
