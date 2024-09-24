@@ -16,6 +16,7 @@ import { UsersModule } from './modules/users/users.module';
         password: configService.getOrThrow<string>('DB_PASS'),
         database: configService.getOrThrow<string>('DB_NAME'),
         autoLoadEntities: true,
+        synchronize: configService.getOrThrow('ENV') === 'dev',
       }),
     }),
     UsersModule,
